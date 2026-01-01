@@ -59,7 +59,7 @@ Dark mode with cyan accent (#22d3ee). CSS variables defined in `src/styles/globa
 
 ### Current Hero Images
 
-- `hero-home.png` - Synthwave wireframe landscape
+- `hero-home.png` - Wide panoramic synthwave sunset landscape
 - `hero-agent.png` - AI/digital brain with circuits
 - `hero-city.png` - Cyberpunk neon city
 - `hero-about.png` - Aurora mountains
@@ -105,3 +105,9 @@ digital art, no text
 ```
 
 Save new images as `hero-[topic].png` in `src/assets/`.
+
+## Development Workflow
+
+1. Run `npm run dev` to start the local server at localhost:4321
+2. Make changes and verify in browser before committing
+3. Use Chrome DevTools MCP (when available) to verify visual changes
