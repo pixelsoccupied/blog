@@ -2,7 +2,12 @@
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
+import { getCollection } from 'astro:content';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
 ---
 
 <!doctype html>
@@ -13,37 +18,80 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 	<body>
 		<Header />
 		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This template
-				serves as a lightweight, minimally-styled starting point for anyone looking to build a personal
-				website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to
-				<a href="https://docs.astro.build/">read the docs</a>
-				or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out
-				<a href="https://github.com/Charca/astro-blog-template">astro-blog-template</a>
-				by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
+			<section class="hero">
+				<h1>Dev Journal</h1>
+				<p class="tagline">Thoughts on code, life, and everything in between.</p>
+			</section>
+
+			<section class="posts">
+				<h2>Recent Posts</h2>
+				<ul>
+					{posts.map((post) => (
+						<li>
+							<a href={`/blog/${post.id}/`}>
+								<span class="title">{post.data.title}</span>
+								<span class="date">
+									{post.data.pubDate.toLocaleDateString('en-us', {
+										year: 'numeric',
+										month: 'short',
+										day: 'numeric',
+									})}
+								</span>
+							</a>
+						</li>
+					))}
+				</ul>
+			</section>
 		</main>
 		<Footer />
+		<style>
+			.hero {
+				margin-bottom: 3em;
+			}
+			.hero h1 {
+				margin-bottom: 0.25em;
+			}
+			.tagline {
+				color: var(--text-muted);
+				font-size: 1.1em;
+			}
+			.posts h2 {
+				font-size: 1.25em;
+				margin-bottom: 1em;
+				color: var(--text-muted);
+			}
+			.posts ul {
+				list-style: none;
+				padding: 0;
+				margin: 0;
+			}
+			.posts li {
+				margin-bottom: 0.75em;
+			}
+			.posts a {
+				display: flex;
+				justify-content: space-between;
+				align-items: baseline;
+				gap: 1em;
+				padding: 0.75em 0;
+				border-bottom: 1px solid var(--border);
+				text-decoration: none;
+			}
+			.posts a:hover {
+				background: var(--bg-secondary);
+				margin: 0 -0.5em;
+				padding: 0.75em 0.5em;
+				border-radius: 4px;
+				border-bottom-color: transparent;
+			}
+			.posts .title {
+				color: var(--text);
+			}
+			.posts .date {
+				color: var(--text-muted);
+				font-size: 0.85em;
+				white-space: nowrap;
+			}
+		</style>
 	</body>
 </html>
