@@ -160,19 +160,18 @@ options = ClaudeAgentOptions(
 
 ## Structured Output with Pydantic
 
-One powerful feature is forcing Claude to return structured JSON that matches a Pydantic model. This is great for parsing unstructured data like emails or documents.
+One powerful feature is forcing Claude to return structured JSON that matches a Pydantic model. This is great for parsing unstructured data.
 
 Define your schema with Pydantic:
 
 ```python
 from pydantic import BaseModel
 
-class BookingEmail(BaseModel):
-    sender: str
-    booking_reference: str | None
-    vessel_name: str | None
-    departure_date: str | None
-    destination: str | None
+class ContactInfo(BaseModel):
+    name: str
+    email: str | None
+    company: str | None
+    role: str | None
 ```
 
 Then use `output_format` to enforce the schema:
@@ -182,25 +181,25 @@ options = ClaudeAgentOptions(
     model="claude-opus-4-5-20251101",
     output_format={
         "type": "json_schema",
-        "schema": BookingEmail.model_json_schema()
+        "schema": ContactInfo.model_json_schema()
     },
-    system_prompt="Extract booking details from the email.",
+    system_prompt="Extract contact information from the text.",
 )
 ```
 
-Claude will return valid JSON matching your schema, which you can parse directly:
+Claude will return valid JSON matching your schema:
 
 ```python
 import json
 
 async with ClaudeSDKClient(options=options) as client:
-    await client.query(email_content)
+    await client.query("Hey, I'm Alex from Acme Inc. Reach me at alex@acme.co")
 
     async for msg in client.receive_response():
         if isinstance(msg, AssistantMessage):
             data = json.loads(msg.content[0].text)
-            booking = BookingEmail(**data)
-            print(f"Vessel: {booking.vessel_name}")
+            contact = ContactInfo(**data)
+            print(f"Name: {contact.name}, Company: {contact.company}")
 ```
 
 That's it. The SDK handles all the message passing, tool execution, and response streaming. Check out the [full documentation](https://github.com/anthropics/claude-agent-sdk-python) for more.
