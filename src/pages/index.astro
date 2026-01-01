@@ -2,8 +2,10 @@
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
+import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import heroImage from '../assets/hero-home.png';
 
 const posts = (await getCollection('blog')).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
@@ -19,6 +21,9 @@ const posts = (await getCollection('blog')).sort(
 		<Header />
 		<main>
 			<section class="hero">
+				<div class="hero-image">
+					<Image src={heroImage} alt="Dev Journal" />
+				</div>
 				<h1>Dev Journal</h1>
 				<p class="tagline">Thoughts on code, life, and everything in between.</p>
 			</section>
@@ -47,6 +52,17 @@ const posts = (await getCollection('blog')).sort(
 		<style>
 			.hero {
 				margin-bottom: 3em;
+				text-align: center;
+			}
+			.hero-image {
+				margin-bottom: 2em;
+				border-radius: 12px;
+				overflow: hidden;
+			}
+			.hero-image img {
+				width: 100%;
+				max-height: 300px;
+				object-fit: cover;
 			}
 			.hero h1 {
 				margin-bottom: 0.25em;
