@@ -15,6 +15,10 @@
 	--box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 }
 
+html {
+	min-height: 100%;
+}
+
 body {
 	font-family: "JetBrains Mono", monospace;
 	margin: 0;
@@ -26,13 +30,17 @@ body {
 	color: var(--text);
 	font-size: 16px;
 	line-height: 1.7;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
 }
 
 main {
 	width: 720px;
 	max-width: calc(100% - 2em);
-	margin: auto;
+	margin: 0 auto;
 	padding: 3em 1em;
+	flex: 1;
 }
 
 h1, h2, h3, h4, h5, h6 {
