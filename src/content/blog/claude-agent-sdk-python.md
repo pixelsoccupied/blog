@@ -1,7 +1,7 @@
 ---
 title: 'Getting Started with Claude Agent SDK for Python'
 description: 'Build AI agents with custom tools using the Claude Agent SDK'
-pubDate: 'Jan 01 2026'
+pubDate: 'Jan 02 2026'
 heroImage: '../../assets/hero-city.png'
 ---
 
