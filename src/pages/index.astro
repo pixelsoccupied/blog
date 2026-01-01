@@ -31,7 +31,7 @@ const posts = (await getCollection('blog')).sort(
 			<section class="posts">
 				<h2>Recent Posts</h2>
 				<ul>
-					{posts.map((post) => (
+					{posts.slice(0, 4).map((post) => (
 						<li>
 							<a href={`/blog/${post.id}/`}>
 								<span class="title">{post.data.title}</span>
@@ -46,6 +46,9 @@ const posts = (await getCollection('blog')).sort(
 						</li>
 					))}
 				</ul>
+				{posts.length > 4 && (
+					<a href="/blog/" class="view-all">View all posts →</a>
+				)}
 			</section>
 		</main>
 		<Footer />
@@ -107,6 +110,15 @@ const posts = (await getCollection('blog')).sort(
 				color: var(--text-muted);
 				font-size: 0.85em;
 				white-space: nowrap;
+			}
+			.view-all {
+				display: inline-block;
+				margin-top: 1.5em;
+				color: var(--accent);
+				font-size: 0.95em;
+			}
+			.view-all:hover {
+				text-decoration: underline;
 			}
 		</style>
 	</body>
