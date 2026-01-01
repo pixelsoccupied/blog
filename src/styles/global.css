@@ -119,6 +119,24 @@ img {
 	font-size: 0.9em;
 }
 
+/* Expressive code blocks */
+.expressive-code,
+figure.expressive-code {
+	max-width: 100%;
+	margin: 1.5em 0;
+	overflow: hidden;
+}
+
+.expressive-code pre {
+	overflow-x: auto;
+	max-width: 100%;
+}
+
+.expressive-code code {
+	white-space: pre;
+	word-wrap: normal;
+}
+
 blockquote {
 	border-left: 4px solid var(--accent);
 	padding: 0 0 0 20px;
