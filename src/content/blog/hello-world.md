@@ -2,6 +2,7 @@
 title: 'Hello World'
 description: 'Welcome to my dev journal'
 pubDate: 'Jan 01 2026'
+heroImage: '../../assets/hero-city.png'
 ---
 
 Welcome to my corner of the internet.
