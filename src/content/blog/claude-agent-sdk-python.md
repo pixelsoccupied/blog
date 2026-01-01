@@ -2,7 +2,7 @@
 title: 'Getting Started with Claude Agent SDK for Python'
 description: 'Build AI agents with custom tools using the Claude Agent SDK'
 pubDate: 'Jan 01 2026'
-heroImage: '../../assets/hero-city.png'
+heroImage: '../../assets/hero-agent.png'
 ---
 
 The Claude Agent SDK lets you build AI agents that can use custom tools, manage state, and execute complex workflows. Here's a quick guide to get started.
