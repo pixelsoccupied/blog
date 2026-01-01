@@ -1,9 +1,10 @@
 /*
-  Dark mode + Monospace theme
+  Theme + Monospace
 */
 
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
 
+/* Dark theme (default) */
 :root {
 	--accent: #22d3ee;
 	--accent-dark: #06b6d4;
@@ -13,6 +14,18 @@
 	--text-muted: #a3a3a3;
 	--border: #2a2a2a;
 	--box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+/* Light theme */
+[data-theme="light"] {
+	--accent: #0891b2;
+	--accent-dark: #06b6d4;
+	--bg: #fafafa;
+	--bg-secondary: #f0f0f0;
+	--text: #1a1a1a;
+	--text-muted: #666666;
+	--border: #e0e0e0;
+	--box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 html {
