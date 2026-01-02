@@ -67,4 +67,4 @@ print(f"{contact.name} - {contact.company}")
 # Alex - Acme Inc
 ```
 
-That's it. No prompt engineering needed to get consistent JSON - the SDK handles it.
+That's it. No prompt engineering needed to get consistent JSON - the SDK handles it!
