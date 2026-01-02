@@ -1,47 +1,41 @@
 ---
 import { getCollection } from 'astro:content';
-import BaseHead from '../../components/BaseHead.astro';
-import Footer from '../../components/Footer.astro';
-import Header from '../../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
-import { getReadingTime } from '../../utils/readingTime';
+import BaseHead from '../../../components/BaseHead.astro';
+import Footer from '../../../components/Footer.astro';
+import Header from '../../../components/Header.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../../../consts';
+import { getReadingTime } from '../../../utils/readingTime';
 
-const posts = (await getCollection('blog')).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-);
+export async function getStaticPaths() {
+	const posts = await getCollection('blog');
+	const tags = [...new Set(posts.flatMap((post) => post.data.tags))];
+	
+	return tags.map((tag) => ({
+		params: { tag },
+		props: {
+			tag,
+			posts: posts
+				.filter((post) => post.data.tags.includes(tag))
+				.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()),
+		},
+	}));
+}
 
-// Get all unique tags
-const allTags = [...new Set(posts.flatMap((post) => post.data.tags))].sort();
+const { tag, posts } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<BaseHead title={`${tag} - ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
 		<style>
 			h1 {
 				font-size: 1.5rem;
 				color: var(--text-muted);
-				margin-bottom: 1em;
+				margin-bottom: 1.5em;
 			}
-			.tags-filter {
-				display: flex;
-				gap: 0.5em;
-				flex-wrap: wrap;
-				margin-bottom: 2em;
-			}
-			.tag-link {
-				background: var(--bg-secondary);
-				color: var(--text-muted);
-				padding: 0.25em 0.75em;
-				border-radius: 9999px;
-				font-size: 0.85em;
-				text-decoration: none;
-				border: none;
-			}
-			.tag-link:hover {
+			.tag-name {
 				color: var(--accent);
-				text-decoration: none;
 			}
 			ul {
 				list-style: none;
@@ -51,7 +45,7 @@ const allTags = [...new Set(posts.flatMap((post) => post.data.tags))].sort();
 			li {
 				margin-bottom: 0.5em;
 			}
-			.post-link {
+			a {
 				display: flex;
 				justify-content: space-between;
 				align-items: baseline;
@@ -60,7 +54,7 @@ const allTags = [...new Set(posts.flatMap((post) => post.data.tags))].sort();
 				border-bottom: 1px solid var(--border);
 				text-decoration: none;
 			}
-			.post-link:hover {
+			a:hover {
 				background: var(--bg-secondary);
 				margin: 0 -0.75em;
 				padding: 0.75em;
@@ -71,7 +65,7 @@ const allTags = [...new Set(posts.flatMap((post) => post.data.tags))].sort();
 				color: var(--text);
 				font-size: 1.1em;
 			}
-			.post-link:hover .title {
+			a:hover .title {
 				color: var(--accent);
 			}
 			.meta {
@@ -81,23 +75,26 @@ const allTags = [...new Set(posts.flatMap((post) => post.data.tags))].sort();
 				font-size: 0.85em;
 				white-space: nowrap;
 			}
+			.back-link {
+				display: inline-block;
+				margin-top: 2em;
+				padding: 0;
+				border: none;
+			}
+			.back-link:hover {
+				background: none;
+				margin: 0;
+			}
 		</style>
 	</head>
 	<body>
 		<Header />
 		<main>
-			<h1>All Posts</h1>
-			{allTags.length > 0 && (
-				<div class="tags-filter">
-					{allTags.map((tag) => (
-						<a href={`/blog/tag/${tag}/`} class="tag-link">#{tag}</a>
-					))}
-				</div>
-			)}
+			<h1>Posts tagged <span class="tag-name">#{tag}</span></h1>
 			<ul>
 				{posts.map((post) => (
 					<li>
-						<a href={`/blog/${post.id}/`} class="post-link">
+						<a href={`/blog/${post.id}/`}>
 							<span class="title">{post.data.title}</span>
 							<span class="meta">
 								<span>{getReadingTime(post.body || '')}</span>
@@ -111,6 +108,7 @@ const allTags = [...new Set(posts.flatMap((post) => post.data.tags))].sort();
 					</li>
 				))}
 			</ul>
+			<a href="/blog/" class="back-link">← All posts</a>
 		</main>
 		<Footer />
 	</body>

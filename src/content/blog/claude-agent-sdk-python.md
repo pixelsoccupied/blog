@@ -3,6 +3,7 @@ title: 'Structured Output with Claude Agent SDK'
 description: 'Force Claude to return typed JSON using Pydantic schemas'
 pubDate: 'Jan 01 2026'
 heroImage: '../../assets/hero-agent.png'
+tags: ['python', 'ai', 'claude']
 ---
 
 The Claude Agent SDK lets you force Claude to return structured JSON that matches a Pydantic model. Super useful for parsing unstructured data.
