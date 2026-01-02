@@ -5,10 +5,12 @@ import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
+import { GITHUB_REPO } from '../consts';
 
-type Props = CollectionEntry<'blog'>['data'] & { readingTime?: string };
+type Props = CollectionEntry<'blog'>['data'] & { slug?: string; readingTime?: string };
 
-const { title, description, pubDate, updatedDate, heroImage, tags = [], readingTime } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, tags = [], slug, readingTime } = Astro.props;
+const editUrl = slug ? `${GITHUB_REPO}/edit/main/src/content/blog/${slug}.md` : null;
 ---
 
 <html lang="en">
@@ -90,6 +92,23 @@ const { title, description, pubDate, updatedDate, heroImage, tags = [], readingT
 			.last-updated-on {
 				font-style: italic;
 			}
+			.edit-link {
+				display: block;
+				margin-top: 3em;
+				padding-top: 1.5em;
+				border-top: 1px solid var(--border);
+				text-align: right;
+				font-size: 0.8em;
+			}
+			.edit-link a {
+				color: var(--text-muted);
+				opacity: 0.6;
+				text-decoration: none;
+			}
+			.edit-link a:hover {
+				opacity: 1;
+				color: var(--accent);
+			}
 		</style>
 	</head>
 
@@ -122,6 +141,13 @@ const { title, description, pubDate, updatedDate, heroImage, tags = [], readingT
 						<hr />
 					</div>
 					<slot />
+					{editUrl && (
+						<div class="edit-link">
+							<a href={editUrl} target="_blank" rel="noopener noreferrer">
+								Edit on GitHub
+							</a>
+						</div>
+					)}
 				</div>
 			</article>
 		</main>
