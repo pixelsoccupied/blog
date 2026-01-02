@@ -3,7 +3,9 @@ import { getCollection } from 'astro:content';
 import BaseHead from '../../components/BaseHead.astro';
 import Footer from '../../components/Footer.astro';
 import Header from '../../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
+import { GITHUB_REPO, SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
+
+const newPostUrl = `${GITHUB_REPO}/new/main/src/content/blog`;
 
 const posts = (await getCollection('blog')).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
@@ -78,6 +80,23 @@ const allTags = [...new Set(posts.flatMap((post) => post.data.tags))].sort();
 				font-size: 0.85em;
 				white-space: nowrap;
 			}
+			.new-post {
+				display: block;
+				margin-top: 2em;
+				padding-top: 1.5em;
+				border-top: 1px solid var(--border);
+				text-align: right;
+				font-size: 0.8em;
+			}
+			.new-post a {
+				color: var(--text-muted);
+				opacity: 0.6;
+				text-decoration: none;
+			}
+			.new-post a:hover {
+				opacity: 1;
+				color: var(--accent);
+			}
 		</style>
 	</head>
 	<body>
@@ -107,6 +126,11 @@ const allTags = [...new Set(posts.flatMap((post) => post.data.tags))].sort();
 					</li>
 				))}
 			</ul>
+			<div class="new-post">
+				<a href={newPostUrl} target="_blank" rel="noopener noreferrer">
+					+ New post
+				</a>
+			</div>
 		</main>
 		<Footer />
 	</body>
