@@ -90,7 +90,7 @@ const allTags = [...new Set(posts.flatMap((post) => post.data.tags))].sort();
 			{allTags.length > 0 && (
 				<div class="tags-filter">
 					{allTags.map((tag) => (
-						<a href={`/blog/tag/${tag}/`} class="tag-link">#{tag}</a>
+						<a href={`/blog/tag/${tag}/`} class="tag-link">{tag}</a>
 					))}
 				</div>
 			)}

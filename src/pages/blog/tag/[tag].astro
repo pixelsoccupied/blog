@@ -90,7 +90,7 @@ const { tag, posts } = Astro.props;
 	<body>
 		<Header />
 		<main>
-			<h1>Posts tagged <span class="tag-name">#{tag}</span></h1>
+			<h1>Posts tagged <span class="tag-name">{tag}</span></h1>
 			<ul>
 				{posts.map((post) => (
 					<li>
