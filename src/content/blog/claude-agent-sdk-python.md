@@ -47,21 +47,18 @@ options = ClaudeAgentOptions(
 
 ## Parse the Response
 
-Claude returns valid JSON matching your schema:
+Claude returns structured output matching your schema:
 
 ```python
 import asyncio
-import json
-from claude_agent_sdk import AssistantMessage
 
 async def extract_contact(text: str) -> ContactInfo:
     async with ClaudeSDKClient(options=options) as client:
         await client.query(text)
 
         async for msg in client.receive_response():
-            if isinstance(msg, AssistantMessage):
-                data = json.loads(msg.content[0].text)
-                return ContactInfo(**data)
+            if hasattr(msg, 'structured_output') and msg.structured_output:
+                return ContactInfo.model_validate(msg.structured_output)
 
 contact = asyncio.run(extract_contact(
     "Hey, I'm Alex from Acme Inc. Reach me at alex@acme.co"
