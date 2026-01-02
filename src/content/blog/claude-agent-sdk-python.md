@@ -11,7 +11,7 @@ The Claude Agent SDK lets you force Claude to return structured JSON that matche
 ## Installation
 
 ```bash
-pip install claude-agent-sdk pydantic
+uv pip install claude-agent-sdk pydantic
 ```
 
 ## Define Your Schema
