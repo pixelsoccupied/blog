@@ -4,6 +4,12 @@
 	"assets": {
 		"directory": "./dist"
 	},
+	"kv_namespaces": [
+		{
+			"binding": "VIEWS",
+			"id": "747955c825c74396b6790770f7d87cf2"
+		}
+	],
 	"observability": {
 		"enabled": true,
 		"head_sampling_rate": 1,

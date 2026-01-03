@@ -124,6 +124,7 @@ const editUrl = slug ? `${GITHUB_REPO}/edit/main/src/content/blog/${slug}.md` : 
 						<div class="meta">
 							<FormattedDate date={pubDate} />
 							{readingTime && <span class="reading-time">· {readingTime}</span>}
+							<span class="views">· <span id="view-count">--</span> views</span>
 						</div>
 						<h1>{title}</h1>
 						{tags.length > 0 && (
@@ -152,5 +153,20 @@ const editUrl = slug ? `${GITHUB_REPO}/edit/main/src/content/blog/${slug}.md` : 
 			</article>
 		</main>
 		<Footer />
+		<script>
+			const slug = window.location.pathname.split('/').filter(Boolean).pop();
+			if (slug) {
+				fetch(`/api/views/${slug}`, { method: 'POST' })
+					.then((r) => r.json())
+					.then((data) => {
+						const el = document.getElementById('view-count');
+						if (el) el.textContent = data.count.toLocaleString();
+					})
+					.catch(() => {
+						const el = document.getElementById('view-count');
+						if (el) el.textContent = '0';
+					});
+			}
+		</script>
 	</body>
 </html>
