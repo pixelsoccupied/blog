@@ -1,9 +1,25 @@
+const ALLOWED_ORIGINS = ['https://blog.nahian.xyz', 'http://localhost:4321'];
+
 export default {
 	async fetch(request, env) {
 		const url = new URL(request.url);
 
 		// Handle view counter API
 		if (url.pathname.startsWith('/api/views/')) {
+			// Check origin/referer - only allow requests from our site
+			const origin = request.headers.get('origin');
+			const referer = request.headers.get('referer');
+			const isAllowed =
+				ALLOWED_ORIGINS.some((o) => origin === o) ||
+				ALLOWED_ORIGINS.some((o) => referer?.startsWith(o));
+
+			if (!isAllowed) {
+				return new Response(JSON.stringify({ error: 'Forbidden' }), {
+					status: 403,
+					headers: { 'Content-Type': 'application/json' },
+				});
+			}
+
 			const slug = url.pathname.replace('/api/views/', '');
 
 			if (!slug) {
