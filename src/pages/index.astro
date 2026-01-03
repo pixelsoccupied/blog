@@ -2,10 +2,10 @@
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
-import { Image } from 'astro:assets';
+import { Picture } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
-import heroImage from '../assets/hero-home.png';
+import heroImage from '../assets/hero-home.jpg';
 
 const posts = (await getCollection('blog')).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
@@ -22,7 +22,7 @@ const posts = (await getCollection('blog')).sort(
 		<main>
 			<section class="hero">
 				<div class="hero-image">
-					<Image src={heroImage} alt="Dev Journal" />
+					<Picture src={heroImage} formats={['avif', 'webp']} alt="Dev Journal hero - synthwave sunset landscape" widths={[400, 720, 1024]} />
 				</div>
 				<h1>Dev Journal</h1>
 				<p class="tagline">Thoughts on code, life, and everything in between.</p>

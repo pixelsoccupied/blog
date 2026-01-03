@@ -12,7 +12,7 @@ Personal blog built with Astro, deployed on Cloudflare Pages.
 
 ```
 src/
-├── assets/          # Images (hero-home.png, hero-city.png, hero-about.png)
+├── assets/          # Images (hero-home.jpg, hero-city.png, hero-about.png)
 ├── components/      # Astro components (Header, Footer, BaseHead, FormattedDate)
 ├── content/blog/    # Markdown blog posts
 ├── layouts/         # Page layouts (BlogPost.astro)
@@ -59,10 +59,14 @@ Dark mode with cyan accent (#22d3ee). CSS variables defined in `src/styles/globa
 
 ### Current Hero Images
 
-- `hero-home.png` - Wide panoramic synthwave sunset landscape
-- `hero-agent.png` - AI/digital brain with circuits
-- `hero-city.png` - Cyberpunk neon city
-- `hero-about.png` - Aurora mountains
+- `hero-home.jpg` - Wide panoramic synthwave sunset landscape (1024x399)
+- `hero-agent.png` - AI/digital brain with circuits (1024x1024)
+- `hero-city.png` - Cyberpunk neon city (1024x1024)
+- `hero-about.png` - Aurora mountains (1024x1024)
+
+### Image Optimization
+
+Uses Astro's `<Picture />` component with `formats={['avif', 'webp']}` for automatic modern format delivery. Images are served at multiple `widths={[400, 720, 1020]}` for responsive loading.
 
 ### Generating New Hero Images
 
