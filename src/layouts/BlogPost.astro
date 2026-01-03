@@ -156,7 +156,8 @@ const editUrl = slug ? `${GITHUB_REPO}/edit/main/src/content/blog/${slug}.md` : 
 		<script>
 			const slug = window.location.pathname.split('/').filter(Boolean).pop();
 			if (slug) {
-				fetch(`/api/views/${slug}`, { method: 'POST' })
+				// View is tracked server-side when page is served, just fetch the count
+				fetch(`/api/views/${slug}`)
 					.then((r) => r.json())
 					.then((data) => {
 						const el = document.getElementById('view-count');

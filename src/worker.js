@@ -1,25 +1,24 @@
-const ALLOWED_ORIGINS = ['https://blog.nahian.xyz', 'http://localhost:4321'];
-
 export default {
-	async fetch(request, env) {
+	async fetch(request, env, ctx) {
 		const url = new URL(request.url);
 
-		// Handle view counter API
-		if (url.pathname.startsWith('/api/views/')) {
-			// Check origin/referer - only allow requests from our site
-			const origin = request.headers.get('origin');
-			const referer = request.headers.get('referer');
-			const isAllowed =
-				ALLOWED_ORIGINS.some((o) => origin === o) ||
-				ALLOWED_ORIGINS.some((o) => referer?.startsWith(o));
+		// Track views when serving blog post pages (server-side, non-blocking)
+		if (url.pathname.startsWith('/blog/') && url.pathname !== '/blog/') {
+			const slug = url.pathname.split('/').filter(Boolean).pop();
 
-			if (!isAllowed) {
-				return new Response(JSON.stringify({ error: 'Forbidden' }), {
-					status: 403,
-					headers: { 'Content-Type': 'application/json' },
-				});
+			if (slug) {
+				// Increment view count in background (non-blocking)
+				ctx.waitUntil(
+					env.VIEWS.get(slug).then((val) => {
+						const count = (parseInt(val, 10) || 0) + 1;
+						return env.VIEWS.put(slug, count.toString());
+					})
+				);
 			}
+		}
 
+		// Read-only API to get view counts (for displaying on page)
+		if (url.pathname.startsWith('/api/views/')) {
 			const slug = url.pathname.replace('/api/views/', '');
 
 			if (!slug) {
@@ -29,12 +28,7 @@ export default {
 				});
 			}
 
-			let count = parseInt(await env.VIEWS.get(slug), 10) || 0;
-
-			if (request.method === 'POST') {
-				count++;
-				await env.VIEWS.put(slug, count.toString());
-			}
+			const count = parseInt(await env.VIEWS.get(slug), 10) || 0;
 
 			return new Response(JSON.stringify({ slug, count }), {
 				headers: {
