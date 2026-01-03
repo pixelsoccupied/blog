@@ -1,19 +1,15 @@
 export default {
-	async fetch(request, env, ctx) {
+	async fetch(request, env) {
 		const url = new URL(request.url);
 
-		// Track views when serving blog post pages (server-side, non-blocking)
+		// Track views when serving blog post pages
 		if (url.pathname.startsWith('/blog/') && url.pathname !== '/blog/') {
 			const slug = url.pathname.split('/').filter(Boolean).pop();
 
 			if (slug) {
-				// Increment view count in background (non-blocking)
-				ctx.waitUntil(
-					env.VIEWS.get(slug).then((val) => {
-						const count = (parseInt(val, 10) || 0) + 1;
-						return env.VIEWS.put(slug, count.toString());
-					})
-				);
+				const val = await env.VIEWS.get(slug);
+				const count = (parseInt(val, 10) || 0) + 1;
+				await env.VIEWS.put(slug, count.toString());
 			}
 		}
 
