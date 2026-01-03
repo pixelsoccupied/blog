@@ -1,20 +1,28 @@
 {
-  "name": "blog",
-  "type": "module",
-  "version": "0.0.1",
-  "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro"
-  },
-  "dependencies": {
-    "@astrojs/mdx": "^4.3.13",
-    "@astrojs/rss": "^4.0.14",
-    "@astrojs/sitemap": "^3.6.0",
-    "astro": "^5.16.6",
-    "astro-expressive-code": "^0.41.5",
-    "remark-toc": "^9.0.0",
-    "sharp": "^0.34.3"
-  }
+	"name": "blog",
+	"type": "module",
+	"version": "0.0.1",
+	"scripts": {
+		"dev": "astro dev",
+		"build": "astro build",
+		"preview": "astro preview",
+		"astro": "astro",
+		"lint": "biome lint .",
+		"lint:fix": "biome lint --write .",
+		"format": "biome format --write .",
+		"check": "biome check .",
+		"check:fix": "biome check --write ."
+	},
+	"dependencies": {
+		"@astrojs/mdx": "^4.3.13",
+		"@astrojs/rss": "^4.0.14",
+		"@astrojs/sitemap": "^3.6.0",
+		"astro": "^5.16.6",
+		"astro-expressive-code": "^0.41.5",
+		"remark-toc": "^9.0.0",
+		"sharp": "^0.34.3"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^2.3.11"
+	}
 }
