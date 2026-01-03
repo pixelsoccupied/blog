@@ -8,6 +8,8 @@ tags: ['python', 'ai', 'claude']
 
 The Claude Agent SDK lets you force Claude to return structured JSON that matches a Pydantic model. Super useful for parsing unstructured data.
 
+## Table of Contents
+
 ## Installation
 
 ```bash

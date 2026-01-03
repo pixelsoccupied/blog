@@ -67,15 +67,15 @@ h1 {
 }
 
 h2 {
-	font-size: 2em;
+	font-size: 1.75em;
 }
 
 h3 {
-	font-size: 1.5em;
+	font-size: 1.25em;
 }
 
 h4 {
-	font-size: 1.25em;
+	font-size: 1.1em;
 }
 
 h5 {
@@ -185,3 +185,39 @@ hr {
 	clip-path: inset(50%);
 	white-space: nowrap;
 }
+
+/* Table of Contents styling */
+#table-of-contents {
+	font-size: 0.75em;
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
+	color: var(--text-muted);
+	margin-bottom: 0.75em;
+	font-weight: 400;
+}
+
+#table-of-contents + ul {
+	list-style: none;
+	padding-left: 0;
+	margin-bottom: 2.5em;
+	font-size: 0.85em;
+	border-left: 2px solid var(--border);
+	padding-left: 1em;
+}
+
+#table-of-contents + ul li {
+	margin-bottom: 0.35em;
+}
+
+#table-of-contents + ul li:last-child {
+	margin-bottom: 0;
+}
+
+#table-of-contents + ul a {
+	color: var(--text-muted);
+}
+
+#table-of-contents + ul a:hover {
+	color: var(--accent);
+}
+
