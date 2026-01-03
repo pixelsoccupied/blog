@@ -57,4 +57,10 @@ const { title, description, image = FallbackImage } = Astro.props;
 <meta property="twitter:image" content={new URL(image.src, Astro.url)} />
 
 <!-- Cloudflare Web Analytics -->
-<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "7c499a1c24064efd8ddf4033ee71cf0d"}'></script>
+{import.meta.env.PUBLIC_CF_BEACON_ID && (
+	<script
+		defer
+		src="https://static.cloudflareinsights.com/beacon.min.js"
+		data-cf-beacon={`{"token": "${import.meta.env.PUBLIC_CF_BEACON_ID}"}`}
+	></script>
+)}
